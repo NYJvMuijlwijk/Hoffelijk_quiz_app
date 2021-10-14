@@ -11,6 +11,8 @@ class Question extends Equatable {
     this.secundaryAnswers = const ["1", "2", "3"],
   });
 
+  List<String> getAllAnswers() => [answer, ...secundaryAnswers];
+
   @override
   List<Object> get props => [question, answer, secundaryAnswers];
 
