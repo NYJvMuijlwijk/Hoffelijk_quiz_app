@@ -1,16 +1,27 @@
 # hoffelijk_quiz_app
 
-A new Flutter project.
+Demo project for Hoffelijk consisting of a simple quiz app made with Flutter
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+By installing the provided apk file on your android device/emulator, the app can be run without needing the project.
 
-A few resources to get you started if this is your first Flutter project:
+To run this app from the project, Flutter will need to be installed on your computer. See https://flutter.dev/docs/getstarted/install.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Additionally either a device needs to be connected to your computer (https://stackoverflow.com/questions/54444538/how-do-i-run-test-my-flutter-app-on-a-real-device#answer-54526682) or an emulator needs to be set up.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+After this, using the command "flutter pub get" in the console should install all the required packages. The app can then be run by using the command "flutter run --release" and selecting the desired device.
+
+Used packages:
+
+* Flutter Bloc
+  * package for implementing the BLoC design pattern in flutter
+  * see https://pub.dev/packages/flutter_bloc
+* Equatable
+  * provides value based equality by overriding the == operator and the objects hashCode
+  * see https://pub.dev/packages/equatable
+* Sizer
+  * package for app responsiveness, % based sizing etc.
+  * see https://pub.dev/packages/sizer
+
+The app itself should be self explanatory, consisting of a start, question and score screen.
