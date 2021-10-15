@@ -12,7 +12,6 @@ class QuestionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuizState state = context.read<QuizCubit>().state;
 
     return SafeArea(
       child: Scaffold(
@@ -24,36 +23,58 @@ class QuestionPage extends StatelessWidget {
           children: [
             Expanded(
               child: Center(
-                child: Padding(
-                  padding: EdgeInsets.all(3.w),
-                  child: Text(
-                    state.currentQuestion.question,
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+                child: _CurrentQuestion(),
               ),
             ),
             Expanded(
               flex: 3,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return Column(
-                    children: [
-                      for (String answer in state.currentQuestion.getAllAnswers()..shuffle())
-                        Expanded(
-                          child: _QuizAnswer(answer: answer),
-                        ),
-                    ],
-                  );
-                },
-              ),
+              child: _Answers(),
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class _CurrentQuestion extends StatelessWidget {
+  const _CurrentQuestion({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final state = context.read<QuizCubit>().state;
+
+    return Padding(
+      padding: EdgeInsets.all(3.w),
+      child: Text(
+        state.currentQuestion.question,
+        style: TextStyle(
+          fontSize: 16.sp,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+}
+
+class _Answers extends StatelessWidget {
+  const _Answers({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final state = context.read<QuizCubit>().state;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          children: [
+            for (String answer in state.currentQuestion.getAllAnswers()..shuffle())
+              Expanded(
+                child: _QuizAnswer(answer: answer),
+              ),
+          ],
+        );
+      },
     );
   }
 }

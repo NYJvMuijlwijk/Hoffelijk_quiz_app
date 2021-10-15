@@ -9,7 +9,7 @@ class QuizState extends Equatable {
 
   final bool noWrongAnswer;
 
-  QuizState({
+  const QuizState({
     this.questions = const [],
     this.usedQuestions = const [],
     this.currentQuestion = const Question(),

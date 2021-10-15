@@ -1,16 +1,21 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hoffelijk_quiz_app/data/questions.dart';
 import 'package:hoffelijk_quiz_app/logic/qubits/score/score_cubit.dart';
 import 'package:hoffelijk_quiz_app/views/score_page.dart';
 import 'package:meta/meta.dart';
 
-import 'package:hoffelijk_quiz_app/data/question.dart';
+import 'package:hoffelijk_quiz_app/data/classes/question.dart';
 import 'package:hoffelijk_quiz_app/logic/qubits/navigation/navigation_cubit.dart';
 import 'package:hoffelijk_quiz_app/views/question_page.dart';
 
 part 'quiz_state.dart';
 
+/**
+ * This cubit is responsible for the handling of displaying the current question, checking the answers given,
+ * and navigating to either the next question page or score page when a wrong answer is given.
+ */
 class QuizCubit extends Cubit<QuizState> {
   final NavigationCubit _navigationCubit;
   final ScoreCubit _scoreCubit;
@@ -19,72 +24,49 @@ class QuizCubit extends Cubit<QuizState> {
   QuizCubit({required navigationCubit, required scoreCubit})
       : _navigationCubit = navigationCubit,
         _scoreCubit = scoreCubit,
-        super(QuizState());
+        super(const QuizState());
 
+  /// Starts a new quiz
+  ///
+  /// Set [retry] to true when you want the current route to be replaced after navigation
   void StartQuiz({bool retry = false}) {
-    List<Question> questions = [
-      Question(
-        question: "0",
-        answer: "0",
-        secundaryAnswers: ["1", "2"],
-        score: 0,
-      ),
-      Question(
-        question: "1",
-        answer: "1",
-        secundaryAnswers: ["2", "3"],
-        score: 1,
-      ),
-      Question(
-        question: "2",
-        answer: "2",
-        secundaryAnswers: ["4", "3"],
-        score: 2,
-      ),
-      Question(
-        question: "3",
-        answer: "3",
-        secundaryAnswers: ["2", "4"],
-        score: 3,
-      ),
-      Question(
-        question: "4",
-        answer: "4",
-        secundaryAnswers: ["2", "3"],
-        score: 4,
-      ),
-      Question(
-        question: "5",
-        answer: "5",
-        secundaryAnswers: ["2", "3"],
-        score: 5,
-      ),
-    ];
+    _scoreCubit.Reset();
 
     emit(QuizState(
-      questions: questions..shuffle(),
+      questions: Questions.GetQuestions()..shuffle(),
     ));
-
-    _scoreCubit.Reset();
 
     _NextQuestion(retry);
   }
 
+  /// Gets the next question from the remaining questions.
+  ///
+  /// [replaceOnCorrect] determines wether the current route gets replaced after navigation
   void _NextQuestion(bool replaceOnCorrect) {
     List<Question> remainingQuestions = state.questions.where((element) => !state.usedQuestions.contains(element)).toList(growable: false);
 
     if (remainingQuestions.length > 0) {
-      Question nextQuestion = remainingQuestions.first;
+      final nextQuestion = remainingQuestions.first;
+      final questionPageRoute = QuestionPage.route();
+
       emit(state.copyWith(
         currentQuestion: nextQuestion,
         usedQuestions: [...state.usedQuestions, nextQuestion],
         selectedAnswer: "",
       ));
-      replaceOnCorrect ? _navigationCubit.PushReplacementRoute(QuestionPage.route()) : _navigationCubit.PushRoute(QuestionPage.route());
+
+      replaceOnCorrect ? _navigationCubit.PushReplacementRoute(questionPageRoute) : _navigationCubit.PushRoute(questionPageRoute);
     } else
       _navigationCubit.PushReplacementRoute(ScorePage.route());
   }
 
+  /// Submit the answer for the current question.
+  ///
+  /// Correct answers will add their score the the total and navigate to the next question if one remains and less than 5 correct answers have been given.
+  ///
+  /// Incorrect or 5 correct answers will navigate to the scorepage.
+  ///
+  /// All navigation happens after a small delay.
   void SubmitAnswer(String answer) {
     emit(state.copyWith(selectedAnswer: answer));
 

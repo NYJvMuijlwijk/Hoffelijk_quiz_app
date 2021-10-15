@@ -14,8 +14,6 @@ class ScorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final quizCubit = context.read<QuizCubit>();
-    final theme = Theme.of(context);
     final buttonStyle = TextButton.styleFrom(
       backgroundColor: Colors.blue,
       padding: EdgeInsets.all(10.w),
@@ -36,18 +34,7 @@ class ScorePage extends StatelessWidget {
             children: [
               Expanded(
                 flex: 2,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      quizCubit.state.noWrongAnswer ? "You Win" : "You Lose",
-                      style: theme.textTheme.headline3,
-                      textAlign: TextAlign.center,
-                    ),
-                    _ScoreDisplay(),
-                  ],
-                ),
+                child: const _ScoringText(),
               ),
               Expanded(
                 flex: 3,
@@ -68,25 +55,48 @@ class ScorePage extends StatelessWidget {
   }
 }
 
+class _ScoringText extends StatelessWidget {
+  const _ScoringText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final quizCubit = context.read<QuizCubit>();
+    final theme = Theme.of(context);
+
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text(
+          quizCubit.state.noWrongAnswer ? "You Win" : "You Lose",
+          style: theme.textTheme.headline3,
+          textAlign: TextAlign.center,
+        ),
+        const _ScoreDisplay(),
+      ],
+    );
+  }
+}
+
 class _ScoreDisplay extends StatelessWidget {
   const _ScoreDisplay({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final scoreCubit = context.read<ScoreCubit>();
-    final theme = Theme.of(context);
+    final style = Theme.of(context).textTheme.headline4;
 
     return Column(
       children: [
         Text(
           "Your final score was: ${scoreCubit.state.score}",
-          style: theme.textTheme.headline4,
+          style: style,
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 3.w),
         Text(
           "Correct anwers: ${scoreCubit.state.correctAnswers}",
-          style: theme.textTheme.headline4,
+          style: style,
           textAlign: TextAlign.center,
         ),
       ],

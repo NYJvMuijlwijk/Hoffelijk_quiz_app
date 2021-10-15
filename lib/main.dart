@@ -32,9 +32,6 @@ class MyApp extends StatelessWidget {
         builder: (_, __, ___) {
           return MaterialApp(
             title: 'Hoffelijk demo quiz app',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
             navigatorKey: _navigatorKey,
             debugShowCheckedModeBanner: false,
             home: const StartPage(),
