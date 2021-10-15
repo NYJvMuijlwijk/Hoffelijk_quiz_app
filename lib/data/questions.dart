@@ -1,47 +1,38 @@
 import 'package:hoffelijk_quiz_app/data/classes/question.dart';
 
 class Questions {
-
-  static List<Question> GetQuestions(){
+  static List<Question> GetQuestions() {
     return [
       Question(
-        question: "0",
-        answer: "0",
-        secundaryAnswers: ["1", "2"],
-        score: 0,
-      ),
-      Question(
-        question: "1",
-        answer: "1",
-        secundaryAnswers: ["2", "3"],
-        score: 1,
-      ),
-      Question(
-        question: "2",
-        answer: "2",
-        secundaryAnswers: ["4", "3"],
-        score: 2,
-      ),
-      Question(
-        question: "3",
-        answer: "3",
-        secundaryAnswers: ["2", "4"],
+        question: "I am part of your body. You can hold me in your left hand but not in your right hand. What am I?",
+        answer: "Right hand",
+        secundaryAnswers: ["Left hand", "Right leg"],
         score: 3,
       ),
       Question(
-        question: "4",
-        answer: "4",
-        secundaryAnswers: ["2", "3"],
-        score: 4,
+        question: "If Tom's father is Tony, then Tony is the _____ of Tom's father.",
+        answer: "Name",
+        secundaryAnswers: ["Father", "Son"],
+        score: 2,
       ),
       Question(
-        question: "5",
-        answer: "5",
-        secundaryAnswers: ["2", "3"],
-        score: 5,
+        question: "I am a 7 letter word. I become longer when my third letter is removed. Who am I?",
+        answer: "Lounger",
+        secundaryAnswers: ["Lasting", "Lengthy"],
+        score: 2,
+      ),
+      Question(
+        question: "I start with a T, end with a T, and have T in me. Who am I?",
+        answer: "Teapot",
+        secundaryAnswers: ["Tent", "Twilight"],
+        score: 2,
+      ),
+      Question(
+        question: "What falls but never breaks?",
+        answer: "Night",
+        secundaryAnswers: ["Day", "Noon"],
+        score: 2,
       ),
     ];
-
   }
-  
 }
