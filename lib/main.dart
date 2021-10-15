@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
     final NavigationCubit navigationCubit = NavigationCubit(_navigatorKey);
@@ -34,6 +35,23 @@ class MyApp extends StatelessWidget {
             title: 'Hoffelijk demo quiz app',
             navigatorKey: _navigatorKey,
             debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              colorScheme: ColorScheme.light(
+                primary: Color(0xFFAEC0BD),
+                secondary: Color(0xFFF6AC3E),
+              ),
+              textTheme: TextTheme(
+                headline2: theme.textTheme.headline2?.copyWith(
+                  color: Color(0xFF5F6A72),
+                ),
+                headline3: theme.textTheme.headline3?.copyWith(
+                  color: Color(0xFF5F6A72),
+                ),
+                headline5: theme.textTheme.headline5?.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+            ),
             home: const StartPage(),
           );
         },

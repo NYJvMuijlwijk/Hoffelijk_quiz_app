@@ -12,7 +12,6 @@ class QuestionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -43,15 +42,16 @@ class _CurrentQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.read<QuizCubit>().state;
+    final theme = Theme.of(context);
 
     return Padding(
       padding: EdgeInsets.all(3.w),
-      child: Text(
-        state.currentQuestion.question,
-        style: TextStyle(
-          fontSize: 16.sp,
+      child: SingleChildScrollView(
+        child: Text(
+          state.currentQuestion.question,
+          style: theme.textTheme.headline4,
+          textAlign: TextAlign.center,
         ),
-        textAlign: TextAlign.center,
       ),
     );
   }
@@ -89,7 +89,8 @@ class _QuizAnswer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuizCubit quizCubit = context.read<QuizCubit>();
+    final quizCubit = context.read<QuizCubit>();
+    final theme = Theme.of(context);
 
     return Padding(
       padding: EdgeInsets.all(3.w),
@@ -105,7 +106,7 @@ class _QuizAnswer extends StatelessWidget {
             );
           else if (state.selectedAnswer.isNotEmpty && state.currentQuestion.answer == answer)
             border = BorderSide(
-              color: Colors.green.withOpacity(0.5),
+              color: Colors.green,
               width: 1.w,
             );
           else
@@ -114,12 +115,13 @@ class _QuizAnswer extends StatelessWidget {
           return TextButton(
             style: TextButton.styleFrom(
               enableFeedback: state.selectedAnswer.isEmpty,
-              backgroundColor: Colors.grey,
-              padding: EdgeInsets.all(3.w),
+              backgroundColor: theme.colorScheme.secondary,
+              padding: EdgeInsets.all(5.w),
               primary: Colors.white,
+              elevation: 5,
               onSurface: state.selectedAnswer == answer ? Colors.white : Colors.grey[800],
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50.w),
+                borderRadius: BorderRadius.circular(5.w),
                 side: border,
               ),
             ),
@@ -127,7 +129,8 @@ class _QuizAnswer extends StatelessWidget {
             child: Center(
               child: Text(
                 answer,
-                style: TextStyle(fontSize: 14.sp),
+                style: theme.textTheme.headline5,
+                textAlign: TextAlign.center,
               ),
             ),
           );

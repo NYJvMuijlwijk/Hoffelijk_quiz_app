@@ -14,12 +14,14 @@ class ScorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final buttonStyle = TextButton.styleFrom(
-      backgroundColor: Colors.blue,
+      backgroundColor: theme.colorScheme.secondary,
       padding: EdgeInsets.all(10.w),
       primary: Colors.white,
+      elevation: 5,
       onSurface: Colors.grey[800],
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.w)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.w)),
     );
 
     return SafeArea(

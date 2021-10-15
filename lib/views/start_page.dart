@@ -58,17 +58,22 @@ class _StartQuizButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final quizCubit = context.read<QuizCubit>();
+    final theme = Theme.of(context);
 
     return TextButton(
       style: TextButton.styleFrom(
-          backgroundColor: Colors.blue,
-          padding: EdgeInsets.all(10.w),
-          primary: Colors.white,
-          onSurface: Colors.grey[800],
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.w))),
+        backgroundColor: theme.colorScheme.secondary,
+        padding: EdgeInsets.all(10.w),
+        primary: Colors.white,
+        onSurface: Colors.grey[800],
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.w),
+        ),
+      ),
       child: Text(
         "Start Quiz",
-        style: TextStyle(fontSize: 16.sp),
+        style: theme.textTheme.headline5,
       ),
       onPressed: () => quizCubit.StartQuiz(),
     );
