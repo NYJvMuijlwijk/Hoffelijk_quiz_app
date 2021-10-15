@@ -18,7 +18,7 @@ class StartPage extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            Flexible(
+            Expanded(
               child: Center(
                 child: Padding(
                   padding: EdgeInsets.all(3.w),
@@ -31,7 +31,7 @@ class StartPage extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 3,
+              flex: 2,
               child: Center(
                 child: TextButton(
                   style: TextButton.styleFrom(
