@@ -6,7 +6,7 @@ Demo project for Hoffelijk consisting of a simple quiz app made with Flutter
 
 By installing the provided apk file on your android device/emulator, the app can be run without needing the project.
 
-To run this app from the project, Flutter will need to be installed on your computer. See https://flutter.dev/docs/getstarted/install.
+To run this app from the project, Flutter will need to be installed on your computer. See https://flutter.dev/docs/get-started/install.
 
 Additionally either a device needs to be connected to your computer (https://stackoverflow.com/questions/54444538/how-do-i-run-test-my-flutter-app-on-a-real-device#answer-54526682) or an emulator needs to be set up.
 
