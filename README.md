@@ -25,3 +25,6 @@ Used packages:
   * see https://pub.dev/packages/sizer
 
 The app itself should be self explanatory, consisting of a start, question and score screen.
+
+## Final Thoughts
+TBD
