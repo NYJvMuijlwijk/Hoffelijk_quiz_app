@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hoffelijk_quiz_app/logic/qubits/score/score_cubit.dart';
 import 'package:hoffelijk_quiz_app/views/score_page.dart';
 import 'package:meta/meta.dart';
 
@@ -12,27 +13,59 @@ part 'quiz_state.dart';
 
 class QuizCubit extends Cubit<QuizState> {
   final NavigationCubit _navigationCubit;
+  final ScoreCubit _scoreCubit;
   final Duration _navigationWaitTime = const Duration(seconds: 3);
 
-  QuizCubit(this._navigationCubit) : super(QuizState());
+  QuizCubit({required navigationCubit, required scoreCubit})
+      : _navigationCubit = navigationCubit,
+        _scoreCubit = scoreCubit,
+        super(QuizState());
 
   void StartQuiz({bool retry = false}) {
     List<Question> questions = [
       Question(
-        question: "What is the lowest non negative number?",
+        question: "0",
         answer: "0",
         secundaryAnswers: ["1", "2"],
+        score: 0,
       ),
       Question(
-        question: "What is 9 + 10?",
-        answer: "21",
-        secundaryAnswers: ["19", "1"],
+        question: "1",
+        answer: "1",
+        secundaryAnswers: ["2", "3"],
+        score: 1,
+      ),
+      Question(
+        question: "2",
+        answer: "2",
+        secundaryAnswers: ["4", "3"],
+        score: 2,
+      ),
+      Question(
+        question: "3",
+        answer: "3",
+        secundaryAnswers: ["2", "4"],
+        score: 3,
+      ),
+      Question(
+        question: "4",
+        answer: "4",
+        secundaryAnswers: ["2", "3"],
+        score: 4,
+      ),
+      Question(
+        question: "5",
+        answer: "5",
+        secundaryAnswers: ["2", "3"],
+        score: 5,
       ),
     ];
 
     emit(QuizState(
       questions: questions..shuffle(),
     ));
+
+    _scoreCubit.Reset();
 
     _NextQuestion(retry);
   }
@@ -56,7 +89,11 @@ class QuizCubit extends Cubit<QuizState> {
     emit(state.copyWith(selectedAnswer: answer));
 
     if (answer == state.currentQuestion.answer) {
-      Future.delayed(_navigationWaitTime, () => _NextQuestion(true));
+      _scoreCubit.IncreaseScore(state.currentQuestion.score);
+      Future.delayed(
+        _navigationWaitTime,
+        () => _scoreCubit.state.correctAnswers >= 5 ? _navigationCubit.PushReplacementRoute(ScorePage.route()) : _NextQuestion(true),
+      );
     } else {
       emit(state.copyWith(noWrongAnswer: false));
       Future.delayed(_navigationWaitTime, () => _navigationCubit.PushReplacementRoute(ScorePage.route()));
